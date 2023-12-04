@@ -1,0 +1,31 @@
+.img-card{
+  width: 300px;
+  height: 200px;
+  cursor: pointer;
+  border-radius: 12px;
+  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+
+
+}
+.img-card:hover{
+  transition: transform 0.4s ease;
+
+}
+.container{
+  margin-top: 75px;
+  
+
+}
+
+.img-card img{
+  width: 100%;
+  object-fit: cover;
+}
+#h1{
+  font-size: 1.5em;
+  color: #b61a1a;
+  font-weight: normal;
+  /* background-color: red; */
+  padding: 10px;
+}
+
