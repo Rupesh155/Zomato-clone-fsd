@@ -15,17 +15,17 @@ const City = () => {
           <div className='row  '>
             <div  className='col-lg-4'>
             <div className='card1'>
-              {/* <h3> Bhopal </h3> */}
+              bhopal
             </div>
             </div>
             <div  className='col-lg-4'>
             <div className='card1'>
-              {/* <h3> Bhopal</h3> */}
+              bhopal
             </div>
             </div>
             <div  className='col-lg-4'>
             <div className='card1'>
-              {/* <h3> Bhopal </h3> */}
+            bhopal
             </div>
             </div>
 

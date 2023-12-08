@@ -7,6 +7,8 @@ import Logo from '../Images/Zomato-Logo.png'
 import Background from '../Images/BackGround.png'
 import Card from './Card';
 import City from './City';
+import Footer from './Footer';
+
 // import Card from './Card';
 
 const Home = () => {
@@ -54,15 +56,24 @@ const Home = () => {
         
     </div>
 
-<Card/>
+{/* <Card/> */}
 
 
-
+{/* 
 <section>
 
 <City/>
 
-</section>
+</section> */}
+
+
+
+<footer>
+    <Footer/>
+</footer>
+
+
+
 
 
 

@@ -1,6 +1,7 @@
 .card1{
     width: 351px;
-    height: 55px;
+    height: 60px;
+    border-radius: 6px;
     background-color: blueviolet;
 }
 #text{
