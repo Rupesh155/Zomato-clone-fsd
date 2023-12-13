@@ -56,15 +56,15 @@ const Home = () => {
         
     </div>
 
-{/* <Card/> */}
+<Card/>
 
 
-{/* 
+
 <section>
 
 <City/>
 
-</section> */}
+</section>
 
 
 
