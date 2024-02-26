@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Container, Grid } from '@mui/material';
 import axios from 'axios'
+import { Route, Routes ,useNavigate} from 'react-router-dom'
 
 const Signup = () => {
+    let navigate=  useNavigate()
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,6 +21,10 @@ const Signup = () => {
     e.preventDefault();
     // Add your signup logic here
     let res=  await  axios.post('http://localhost:4000/api/users',formData)
+           if(res){
+            navigate('/login')
+
+           }
     console.log(res);
   };
 
