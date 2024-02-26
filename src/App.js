@@ -46,3 +46,32 @@ export default App
 // }
 
 // export default App
+
+
+
+
+// // import React from 'react'
+
+// // const App = () => {
+
+
+// //   localStorage.setItem('data', "condinggg")
+
+// //      let a=     localStorage.getItem('data')
+// //      console.log(a);
+
+
+// //   return (
+// //     <div>App
+
+// //       <input   type='text'/>
+
+
+
+
+
+// //     </div>
+// //   )
+// // }
+
+// // export default App

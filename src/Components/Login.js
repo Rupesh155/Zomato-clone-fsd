@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios'
-import { Route, Routes ,useNavigate} from 'react-router-dom'
+import { Route, Routes ,json,useNavigate} from 'react-router-dom'
 
 
 const Login = () => {
-     let navigate=
-       useNavigate()
+     let navigate=  useNavigate()
   const [formData, setFormData] = useState({
     email: '',
     passWord: ''
@@ -21,10 +20,10 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:4000/api/login',formData);
       console.log(response.data,"rr");
-      localStorage.setItem('userData', JSON.stringify(response.data));
-        if(response.data.token){
-          navigate('/')
-        }
+            localStorage.setItem('userData', JSON.stringify(response.data))
+            if(response.data){
+              navigate('/')
+            }
     } catch (error) {
       console.error('Error logging in:', error);
     }

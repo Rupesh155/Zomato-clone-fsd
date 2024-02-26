@@ -15,17 +15,35 @@ const Home = () => {
 
 
     
-    const [userData, setUserData] = useState(null);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
-      const data = JSON.parse(localStorage.getItem('userData'));
-      setUserData(data);
-    }, []);
+
+         let data=   localStorage.getItem('userData')
+         console.log(data,"dataaaaaaaa");
+        let newData=  JSON.parse(data)
+        console.log(newData,"newData");
+
+        setData(newData)
+
+
   
-    const remove = () => {
-      localStorage.removeItem('userData');
-      setUserData(null);
-    };
+ 
+    }, []);
+
+       let remove=()=>{
+        localStorage.clear('userData')
+        setData(null)
+
+
+       }
+  
+    // const remove = () => {
+    //   localStorage.removeItem('userData');
+    //   setUserData(null);
+    // };
+
+
   
 
 
@@ -41,10 +59,29 @@ const Home = () => {
             <span className='floar-right2'> <NavLink   to='/addr' className='color-b'>Add Restaurant</NavLink> </span> 
         </div>
         <div className='div2'> 
-        {   userData? ( <>      <p>{userData.userData.name }</p>
+        {/* {   userData? ( <>      <p>{userData.userData.name }</p>
          <span  onClick={remove}  className='floar-right2'> <NavLink      className='color-b'>Logout</NavLink> <BiLogInCircle/> </span> </>  
-        ):(   <>   <span className='floar-right1'> <FaUserAlt/> <NavLink  to='/signup'  className='color-b'>Sign-up</NavLink> </span> 
-            <span className='floar-right2'> <NavLink  to='/login' className='color-b'>Login</NavLink> <BiLogInCircle/> </span>  </>  )} 
+        ):(   <>  </>  )}  */}
+
+{
+   data? (  <>   <p> {  data.userData.name} </p>
+    <span  onClick={remove}   className='floar-right2'> <NavLink  className='color-b'>Logout</NavLink> <BiLogInCircle/> </span>  
+
+    </>
+
+   ):
+
+   (     <>   
+   <span className='floar-right1'> <FaUserAlt/> <NavLink  to='/signup'  className='color-b'>Sign-up</NavLink> </span> 
+   <span className='floar-right2'> <NavLink  to='/login' className='color-b'>Login</NavLink> <BiLogInCircle/> </span>    </>  )
+}
+
+
+
+
+
+         {/* <span className='floar-right1'> <FaUserAlt/> <NavLink  to='/signup'  className='color-b'>Sign-up</NavLink> </span> 
+            <span className='floar-right2'> <NavLink  to='/login' className='color-b'>Login</NavLink> <BiLogInCircle/> </span>   */}
         
         </div>
         </div>
