@@ -9,8 +9,6 @@ import Card from './Card';
 import City from './City';
 import Footer from './Footer';
 
-
-
 const Home = () => {
 
 
