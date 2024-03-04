@@ -5,6 +5,8 @@ import Login from './Components/Login'
 import Signup from './Components/SignUp'
 import AddRestro from './Components/AddRestro'
 import View from './Components/View'
+import AddProducts from './Components/AddProduct'
+import ViewFood from './Components/ViewFood'
 
 
 
@@ -16,6 +18,9 @@ const App = () => {
         <Route  path='/login'   element={<Login/>}/>
         <Route  path='/signup'   element={<Signup/>}/>
         <Route  path='/addr'   element={<AddRestro/>}/>
+        <Route  path='/addr/:restroId/addProduct'   element={<AddProducts/>}/>
+        <Route  path='/addr/:restroId/Products'   element={<ViewFood/>}/>
+
         <Route  path='/view'   element={<View/>}/>
 
 
@@ -32,46 +37,3 @@ const App = () => {
 export default App
 
 
-
-// import React from 'react'
-// import ComA from './ComA'
-
-// const App = () => {
-//   let user='hello'
-//   return (
-//     <div>
-//       <ComA />
-//     </div>
-//   )
-// }
-
-// export default App
-
-
-
-
-// // import React from 'react'
-
-// // const App = () => {
-
-
-// //   localStorage.setItem('data', "condinggg")
-
-// //      let a=     localStorage.getItem('data')
-// //      console.log(a);
-
-
-// //   return (
-// //     <div>App
-
-// //       <input   type='text'/>
-
-
-
-
-
-// //     </div>
-// //   )
-// // }
-
-// // export default App

@@ -1,5 +1,5 @@
 
-
+// Rup@#12345&*pesh
   import React, { useState } from 'react';
   import './AddRestro.css'; // Import the CSS file
   import axios from 'axios';
@@ -34,7 +34,6 @@
         if (error) {
           throw error;
         }
-
         // https://fzdfcdjjbsnwmdvxhfrh.supabase.co/storage/v1/object/public/zomato/restaurant_images/india-flag.jpg
         // Get the URL of the uploaded image
         const imageUrl = `${supabaseUrl}/storage/v1/object/public/zomato/restaurant_images/${restaurantData.image.name}`;
@@ -42,7 +41,7 @@
     
         // Save restaurant data to MongoDB with image URL
         const response = await axios.post('http://localhost:4000/api/restro', { ...restaurantData, image:imageUrl });
-        if (response.ok) {
+        if (response) {
           alert('Restaurant added successfully');
           // Reset form fields
           setRestaurantData({

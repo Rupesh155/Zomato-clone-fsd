@@ -10,9 +10,6 @@ import City from './City';
 import Footer from './Footer';
 
 const Home = () => {
-
-
-    
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -23,9 +20,6 @@ const Home = () => {
         console.log(newData,"newData");
 
         setData(newData)
-
-
-  
  
     }, []);
 
