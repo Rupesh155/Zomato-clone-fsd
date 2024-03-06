@@ -1,79 +1,93 @@
+
+// Rup@#12345&*pesh
 import React, { useState } from 'react';
 import './AddRestro.css'; // Import the CSS file
 import axios from 'axios';
+import { useNavigate,useParams } from 'react-router-dom'
 import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = 'https://fzdfcdjjbsnwmdvxhfrh.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ6ZGZjZGpqYnNud21kdnhoZnJoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDg4ODI4MzUsImV4cCI6MjAyNDQ1ODgzNX0.9PKXQYWt1KcDrstMRzxdVrW0AfoLJWzsnXAheNStG7s';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const AddProducts = () => {
-  const [productData, setProductData] = useState({
+const AddProduct = () => {
+
+   let {restroId} =   useParams()
+
+  const [restaurantData, setRestaurantData] = useState({
     name: '',
     description: '',
     image: '',
-    price: '',
+    price:''
+
+
   });
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setProductData({ ...productData, image: file });
+    console.log(file);
+    setRestaurantData({ ...restaurantData, image: file });
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProductData({ ...productData, [name]: value });
+    setRestaurantData({ ...restaurantData, [name]: value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // Upload image to Supabase
-      const { data, error } = await supabase.storage.from('zomato').upload('product_images/' + productData.image.name, productData.image);
+      const { data, error } = await supabase.storage.from('zomato').upload('product_images/' + restaurantData.image.name, restaurantData.image);
       if (error) {
         throw error;
       }
-
+      // https://fzdfcdjjbsnwmdvxhfrh.supabase.co/storage/v1/object/public/zomato/restaurant_images/india-flag.jpg
       // Get the URL of the uploaded image
-      const imageUrl = `${supabaseUrl}/storage/v1/object/public/zomato/product_images/${productData.image.name}`;
-      console.log(imageUrl);
-
-      // Save product data to MongoDB with image URL
-      const response = await axios.post('http://localhost:4000/api/products', { ...productData, image: imageUrl });
+      const imageUrl = `${supabaseUrl}/storage/v1/object/public/zomato/product_images/${restaurantData.image.name}`;
+      console.log(imageUrl,"blocking zzzzzzz");
+  
+      // Save restaurant data to MongoDB with image URL
+      const response = await axios.post('http://localhost:4000/api/product', { ...restaurantData, image:imageUrl ,restroId});
       if (response) {
-        alert('Product added successfully');
+        alert('Restaurant added successfully');
+        // Reset form fields
+     
       } else {
-        alert('Failed to add product');
+        alert('Failed to add restaurant');
       }
     } catch (error) {
-      console.error('Error adding product:', error);
-      alert('Failed to add product');
+      console.error('Error adding restaurant:', error);
+      alert('Failed to add restaurant');
     }
   };
 
   return (
     <div>
-      <h2>Add Product</h2>
+      <h2>Add Restaurant</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name:</label>
-          <input type="text" name="name" value={productData.name} onChange={handleChange} required />
+          <input type="text" name="name" value={restaurantData.name} onChange={handleChange} required />
+        </div>
+        <div className="form-group">
+          <label>Price:</label>
+          <input type="text" name="price" value={restaurantData.price} onChange={handleChange} required />
         </div>
         <div className="form-group">
           <label>Description:</label>
-          <input type="text" name="description" value={productData.description} onChange={handleChange} required />
+          <input type="text" name="description" value={restaurantData.description} onChange={handleChange} required />
         </div>
         <div className="form-group">
           <label>Image:</label>
           <input type="file" onChange={handleImageChange} accept="image/*" required />
         </div>
-        <div className="form-group">
-          <label>Price:</label>
-          <input type="text" name="price" value={productData.price} onChange={handleChange} required />
-        </div>
+      
+  
         <button type="submit">Add Product</button>
+        {/* <img   src='https://fzdfcdjjbsnwmdvxhfrh.supabase.co/storage/v1/object/public/zomato/restaurant_images/india-flag.jpg'/> */}
+        {/* <img  src='https://fzdfcdjjbsnwmdvxhfrh.supabase.co/storage/v1/object/public/zomato/restaurant_images/taro-ohtani-TWJnM9MQlt8-unsplash.jpg'/> */}
       </form>
     </div>
   );
 };
 
-export default AddProducts;
+export default AddProduct;
+// const { data, error } = await supabase.storage.from('zomato').upload('restaurant_images/' + restaurantData.image.name, restaurantData.image);

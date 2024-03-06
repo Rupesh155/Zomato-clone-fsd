@@ -1,21 +1,23 @@
-
-
 import React from 'react'
-import { Link } from 'react-router-dom'
-import AddProducts from './AddProduct'
-import { useParams,useNavigate } from 'react-router-dom'
+import { useNavigate,useParams } from 'react-router-dom'
+
 const ViewFood = () => {
+  let navigate=    useNavigate()
 
-      let {restroId}=   useParams()
-     let navigate=    useNavigate()
-    const AddProducts=()=>{
-        navigate(`/addr/${restroId}/addProduct`)
-        console.log(restroId,"reeee");
+  // console.log(useParams(),"rrrrrrrr");
+ let {restroId}=  useParams()
 
-    }
+  let addProduct=()=>{
+    navigate(`/view/${restroId}/addProduct`)
+
+  }
   return (
-    <div>ViewFood 
-       <h2  onClick={AddProducts}>  add products</h2>
+    <div>
+
+
+      <button     onClick={addProduct} >
+  add product
+      </button>
     </div>
   )
 }

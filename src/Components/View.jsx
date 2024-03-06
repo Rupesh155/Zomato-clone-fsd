@@ -35,10 +35,12 @@ const View = () => {
     });
     SetSearch(NewA);
   };
+  // show food
+  const showFood=(id)=>{
+    navigate(`/view/${id}/product`)
+    // console.log(id,"idddddd");
 
-
-
-
+  }
   return (
     <>
       <div className='container  w-75  d-flex justify-content-between align-items-center'>
@@ -58,25 +60,9 @@ const View = () => {
       <section className='container w-75 '>
         <h2 style={{ fontWeight: 400 }} className=''> Best food in the Bhopal </h2>
         <div className='row   d-flex justify-content-between align-items-center'>
-
-{/* 
-          {
-            search.map((  data)=>{
-              return(<>
-
-              <img   src={data.image}/>
-              <h4>   {data.name}</h4>
-              <p> {data.address}</p>
-
-              </>)
-
-            })
-          } */}
-
-
-
+          
         {search.map((res, index) => (
-  <div    key={index} className="card mt-4" style={{ width: '18rem' }}>
+  <div      onClick={ ()=>   showFood(res._id)}   key={index} className="card mt-4" style={{ width: '18rem' }}>
     <img src={res.image} className="card-img-top" alt="Restaurant" />
     <div className="card-body">
   
