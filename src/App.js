@@ -7,6 +7,7 @@ import AddRestro from './Components/AddRestro'
 import View from './Components/View'
 import AddProducts from './Components/AddProduct'
 import ViewFood from './Components/ViewFood'
+import ViewCart from './Components/ViewCart'
 
 
 
@@ -19,11 +20,14 @@ const App = () => {
         <Route  path='/signup'   element={<Signup/>}/>
         <Route  path='/addr'   element={<AddRestro/>}/>
         <Route  path='/view'   element={<View/>}/>
+        <Route  path='/ViewCart'   element={<ViewCart/>}/>
+
+
         <Route  path='/view/:restroId/product'   element={<ViewFood/>}/>
         <Route  path='/view/:restroId/addProduct'   element={<AddProducts/>}/>
 
 
-
+ 
 
 
 

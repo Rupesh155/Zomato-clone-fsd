@@ -61,7 +61,7 @@ const AddProduct = () => {
 
   return (
     <div>
-      <h2>Add Restaurant</h2>
+      <h2>Add Products</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name:</label>
