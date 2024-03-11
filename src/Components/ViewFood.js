@@ -1,10 +1,8 @@
 
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import './ViewFood.css'; // Import the CSS file
-
 const ViewFood = () => {
   const navigate = useNavigate();
   const { restroId } = useParams();
@@ -12,7 +10,6 @@ const ViewFood = () => {
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [cart, setCart] = useState([]);
-
   useEffect(() => {
     async function showProduct() {
       const restaurant = await axios.get(`http://localhost:4000/api/restro/${restroId}`);
@@ -25,14 +22,13 @@ const ViewFood = () => {
     }
     showProduct()
   }, []);
-
   const handleplus = (id) => {
     let updatedProduct = [...products];
     updatedProduct[id].quantity = ((updatedProduct[id].quantity || 0) + 1);
     setProducts(updatedProduct);
 
-
-
+    const productToAdd = { ...products[id] };
+    setCart([...cart.filter(item => item._id !== productToAdd._id), productToAdd]);
     calculateTotalPrice();
   }
 
@@ -40,6 +36,9 @@ const ViewFood = () => {
     let updatedProduct = [...products];
     updatedProduct[id].quantity = Math.max(((updatedProduct[id].quantity || 0) - 1), 0);
     setProducts(updatedProduct);
+
+    const productToRemove = { ...products[id] };
+    setCart(cart.filter(item => item._id !== productToRemove._id));
     calculateTotalPrice();
   }
 
@@ -49,7 +48,6 @@ const ViewFood = () => {
     }, 0);
     setTotalPrice(totalPrice);
   };
-
   const addProductToCart = (id) => {
     let updatedProduct = [...products];
     updatedProduct[id].quantity = ((updatedProduct[id].quantity || 0) + 1);;
@@ -67,7 +65,6 @@ const ViewFood = () => {
   const addProduct = () => {
     navigate(`/view/${restroId}/addproduct`)
   }
-
   return (
     <>
 
@@ -91,7 +88,7 @@ const ViewFood = () => {
                 <h2>{data.name}</h2>
                 <h1>{data.price}</h1>
               </div>
-              <div id='quanity_button'>          <p id='quantity'>Quantity: {data.quantity || 0}
+              <div id='quanity_button'>  <p id='quantity'>Quantity: {data.quantity || 0}
               </p>
                 {!data.quantity ? (
                   <button onClick={() => addProductToCart(id)}>Add</button>
@@ -102,13 +99,10 @@ const ViewFood = () => {
                   </>
                 )}
               </div>
-
-
               <p>Total Price: {data.price * (data.quantity || 0)}</p>
             </div>
           ))}
         </div>
-
         {/* <p>Total Price of all products: {totalPrice}</p> */}
       </div>
     </>
