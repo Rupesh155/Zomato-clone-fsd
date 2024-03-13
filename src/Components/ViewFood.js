@@ -58,9 +58,8 @@ const ViewFood = () => {
     calculateTotalPrice();
 
   }
-
   const viewCart = () => {
-    navigate('/viewCart', { state: { cart,totalPrice } });
+    navigate(`/viewCart/${restroId}`, { state: { cart,totalPrice,restaurant } });
   }
   const addProduct = () => {
     navigate(`/view/${restroId}/addproduct`)

@@ -10,9 +10,6 @@ import ViewFood from './Components/ViewFood'
 import ViewCart from './Components/ViewCart'
 import Success from './Components/Success'
 import Cancel from './Components/Cancel'
-
-
-
 const App = () => {
   return (
     <div>
@@ -24,7 +21,7 @@ const App = () => {
         <Route  path='/view'   element={<View/>}/>
         <Route  path='/sucess'   element={<Success/>}/>
         <Route  path='/cancel'   element={<Cancel/>}/>
-        <Route  path='/ViewCart'   element={<ViewCart/>}/>
+        <Route  path='/ViewCart/:restroId'   element={<ViewCart/>}/>
         <Route  path='/view/:restroId/product'   element={<ViewFood/>}/>
         <Route  path='/view/:restroId/addProduct'   element={<AddProducts/>}/> 
       </Routes>

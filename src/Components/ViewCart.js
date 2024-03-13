@@ -1,10 +1,6 @@
 
-
-
-
-
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useParams } from 'react-router-dom';
 import {loadStripe} from '@stripe/stripe-js';
 import './ViewCart.css';
 
@@ -13,6 +9,7 @@ const BillDetailsCard = ({ totalPrice, discount, gstRate, platformChargeRate }) 
   const gstAmount = (totalPrice * gstRate) / 100;
   const platformCharge = (totalPrice * platformChargeRate) / 100;
   const totalAmount = totalPrice - (totalPrice * discount) / 100 + gstAmount + platformCharge;
+      
   return (
     <div className='bill-details-card'>
       <h3>Bill Details</h3>
@@ -29,15 +26,17 @@ const BillDetailsCard = ({ totalPrice, discount, gstRate, platformChargeRate }) 
 
 const ViewCart = () => {
   const location = useLocation();
+   let {restroId}=    useParams()
 
-  const { cart, totalPrice: initialTotalPrice } = location.state;
+  const { cart, totalPrice: initialTotalPrice ,restaurant} = location.state;
+  console.log(restaurant,"reeeee");
 
   const [coupon, setCoupon] = useState('');
   const [discount, setDiscount] = useState(0);
   const [savedAmount, setSavedAmount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(initialTotalPrice);
   const [cartItems, setCartItems] = useState(cart);
-  const [paymentError, setPaymentError] = useState(null);
+
 
   const handleApplyCoupon = () => {
     switch (coupon) {
@@ -66,7 +65,9 @@ const ViewCart = () => {
     const stripe = await loadStripe("pk_test_51Os8E4SEhF2ghQp3XHXBDJU6mg4MgQvqxMyH9zs14Wroo0geX7yNvfQuqwdIjNC3xQk5DUZZUE2b69BXTH9AaGfL00vBl5hq9k");
 
     const body = {
-        products:cartItems
+        products:cartItems,
+        restroId:restroId,
+        restaurant:restaurant
     }
     const headers = {
         "Content-Type":"application/json"
