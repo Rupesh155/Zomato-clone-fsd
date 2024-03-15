@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './Components/Home'
 import Login from './Components/Login'
@@ -10,20 +10,29 @@ import ViewFood from './Components/ViewFood'
 import ViewCart from './Components/ViewCart'
 import Success from './Components/Success'
 import Cancel from './Components/Cancel'
+
 const App = () => {
+  let [login,SetLogin]=useState(null)
+  useEffect(()=>{
+   let isLoggedIn=    localStorage.getItem('userData')
+   SetLogin(isLoggedIn)
+     
+  },[login])
+
+
   return (
     <div>
       <Routes>
-        <Route path='/'       element={<Home/>}  />
+        <Route path='/'       element={ <Home/>}  />
         <Route  path='/login'   element={<Login/>}/>
         <Route  path='/signup'   element={<Signup/>}/>
-        <Route  path='/addr'   element={<AddRestro/>}/>
+        <Route  path='/addr'   element={login?<AddRestro/>:<Home/>}/>
         <Route  path='/view'   element={<View/>}/>
-        <Route  path='/sucess'   element={<Success/>}/>
-        <Route  path='/cancel'   element={<Cancel/>}/>
-        <Route  path='/ViewCart/:restroId'   element={<ViewCart/>}/>
+        <Route  path='/sucess'   element={login? <Success/>:<Login/>}/>
+        <Route  path='/cancel'   element={login?<Cancel/>:<Login/>}/>
+        <Route  path='/ViewCart/:restroId'   element={login?<ViewCart/>:<Login/>}/>
         <Route  path='/view/:restroId/product'   element={<ViewFood/>}/>
-        <Route  path='/view/:restroId/addProduct'   element={<AddProducts/>}/> 
+        <Route  path='/view/:restroId/addProduct'   element={login?<AddProducts/>:<Login/>}/> 
       </Routes>
 
     </div>
@@ -32,10 +41,10 @@ const App = () => {
 
 export default App
 
-
+// // App.js
 // import React from 'react';
-// import { Routes ,Route} from 'react-router-dom';
-// import AuthRoute from './Components/AuthRout'
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import PrivateRoute from './Components/PrivateRoutes';
 // import Home from './Components/Home';
 // import Login from './Components/Login';
 // import Signup from './Components/SignUp';
@@ -49,24 +58,21 @@ export default App
 
 // const App = () => {
 //   return (
-//     <div>
+   
 //       <Routes>
-//         <Route path="/" element={<Home />} />
-//         <Route path="/login" element={<Login />} />
-//         <Route path="/signup" element={<Signup />} />
-//         <AuthRoute path="/addr" element={<AddRestro />} />
-//         <AuthRoute path="/view" element={<View />} />
-//         <AuthRoute path="/success" element={<Success />} />
-//         <AuthRoute path="/cancel" element={<Cancel />} />
-//         <AuthRoute path="/ViewCart" element={<ViewCart />} />
-//         <AuthRoute path="/view/:restroId/product" element={<ViewFood />} />
-//         <AuthRoute path="/view/:restroId/addProduct" element={<AddProducts />} />
+//         <Route path='/' element={<Home />} />
+//         <Route path='/login' element={<Login />} />
+//         <Route path='/signup' element={<Signup />} />
+//         <PrivateRoute path='/addr' element={<AddRestro />} />
+//         <PrivateRoute path='/view' element={<View />} />
+//         <PrivateRoute path='/success' element={<Success />} />
+//         <PrivateRoute path='/cancel' element={<Cancel />} />
+//         <PrivateRoute path='/ViewCart/:restroId' element={<ViewCart />} />
+//         <PrivateRoute path='/view/:restroId/product' element={<ViewFood />} />
+//         <PrivateRoute path='/view/:restroId/addProduct' element={<AddProducts />} />
 //       </Routes>
-//     </div>
+  
 //   );
 // };
 
 // export default App;
-
-
-

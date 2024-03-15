@@ -1,22 +1,29 @@
 
-
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-
 const Success = () => {
   const [orders, setOrders] = useState([]);
-  const [ratings, setRatings] = useState({rating:0});
-  console.log(ratings,"rrr");
- 
+  const [ratings, setRatings] = useState([]);
 
   useEffect(() => {
     async function fetchOrders() {
       try {
         const response = await axios.get('http://localhost:4000/api/past-orders');
         setOrders(response.data);
+
+        const initialRatings = response.data.map((order) => {
+          const productsRatings = {};
+          order.products.forEach((product) => {
+            productsRatings[product._id] = { rating: 0, productId: product._id };
+          });
+          return {
+            orderId: order.order._id,
+            productsRatings
+          };
+        });
+        setRatings(initialRatings);
       } catch (error) {
         console.error('Error fetching past orders:', error);
       }
@@ -25,17 +32,19 @@ const Success = () => {
     fetchOrders();
   }, []);
 
-  const renderStars = (rating, productId) => {
-   
+  const renderStars = (orderId, productId) => {
+    const orderRatings = ratings.find((rating) => rating.orderId === orderId);
+    if (!orderRatings) return null;
+
+    const { rating } = orderRatings.productsRatings[productId] || { rating: 0 };
     const stars = [];
     for (let i = 1; i <= 5; i++) {
-
       stars.push(
         <FontAwesomeIcon
           key={i}
           icon={faStar}
           color={i <= rating ? 'gold' : 'grey'}
-          onClick={() => handleRating(productId, i)}
+          onClick={() => handleRating(orderId, productId, i)}
           style={{ cursor: 'pointer' }}
         />
       );
@@ -43,11 +52,28 @@ const Success = () => {
     return stars;
   };
 
-  const handleRating = (productId, rating) => {
-    setRatings({ ...ratings, [productId]: rating });
-
-    // setRatings({ ...ratings, rating });
-   
+  const handleRating = async (orderId, productId, rating) => {
+    try {
+      const response = await axios.post('http://localhost:4000/api/ratings', { orderId, productId, rating });
+      console.log('Rating saved:', response.data);
+      setRatings((prevRatings) => {
+        const updatedRatings = prevRatings.map((orderRatings) => {
+          if (orderRatings.orderId === orderId) {
+            return {
+              ...orderRatings,
+              productsRatings: {
+                ...orderRatings.productsRatings,
+                [productId]: { rating, productId }
+              }
+            };
+          }
+          return orderRatings;
+        });
+        return updatedRatings;
+      });
+    } catch (error) {
+      console.error('Error saving rating:', error);
+    }
   };
 
   return (
@@ -67,8 +93,7 @@ const Success = () => {
                 <p>Price: {product.price}</p>
                 <img src={product.image} alt={product.name} style={{ width: '100px', height: '100px' }} />
                 {/* Render stars for rating */}
-                <div>Rating: {renderStars(ratings[product._id] || 0, product._id)}</div>
-            
+                <div>Rating: {renderStars(orderWithDetails.order._id, product._id)}</div>
               </li>
             ))}
           </ul>
@@ -79,3 +104,4 @@ const Success = () => {
 };
 
 export default Success;
+
